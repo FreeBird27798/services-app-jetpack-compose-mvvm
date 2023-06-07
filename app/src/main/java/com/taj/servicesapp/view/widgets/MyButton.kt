@@ -1,0 +1,67 @@
+package com.taj.servicesapp.view.widgets
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import java.util.Locale
+
+
+@Composable
+fun MyButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    gradientColors: List<Color>,
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier.padding(16.dp).height(55.dp),
+        contentPadding = PaddingValues(0.dp),
+        shape = RoundedCornerShape(5.dp),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = Color.Transparent,
+            contentColor = Color.White
+        )
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .drawWithCache {
+                    onDrawBehind {
+                        drawRect(
+                            brush = Brush.horizontalGradient(
+                                colors = gradientColors,
+                                startX = 0f,
+                                endX = size.width
+                            )
+                        )
+                    }
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = text.uppercase(Locale.ROOT),
+                style = MaterialTheme.typography.button.copy(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 0.5.sp,
+                    fontFamily = FontFamily.Monospace
+                ),
+                color = Color.White
+            )
+        }
+    }
+}
